@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hiệu Ứng Tuyết Rơi Giáng Sinh và Hộp Quà</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: url("./assets/image/background-giang-sinh-dep.jpg")
+          no-repeat center center fixed;
+        background-size: cover;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Thiệp chúc mừng */
+      .card {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8); /* Bắt đầu từ trạng thái nhỏ hơn */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        text-align: center;
+        border-radius: 10px;
+        display: none;
+        z-index: 9999;
+        max-width: 400px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        opacity: 0; /* Bắt đầu với độ mờ */
+        transition: opacity 0.5s ease, transform 0.5s ease; /* Thêm hiệu ứng chuyển động */
+        word-wrap: break-word; /* Giúp text tự xuống dòng khi cần */
+        min-height: 100px; /* Đảm bảo thiệp luôn có chiều cao tối thiểu */
+      }
+
+      .card.show {
+        opacity: 1; /* Khi thiệp được hiển thị, độ mờ bằng 1 */
+        transform: translate(-50%, -50%) scale(1); /* Khi thiệp mở ra, trở lại kích thước bình thường */
+      }
+
+      .card h2 {
+        font-size: 28px;
+        color: #333;
+        white-space: normal; /* Cho phép text xuống dòng */
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+        animation: typing 5s steps(30) 1s forwards,
+          blink 0.75s step-end infinite;
+      }
+
+      /* Hiệu ứng gõ chữ */
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink {
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      /* Các hiệu ứng tuyết rơi và hộp quà như cũ */
+    </style>
+  </head>
+  <body>
+    <!-- Phát nhạc khi trang mở lên -->
+    <audio id="background-music" autoplay loop muted>
+      <source
+        src="./assets/image/Last_Christmas_[_YouConvert.net_].mp3"
+        type="audio/mp3"
+      />
+    </audio>
+
+    <script>
+      // Đảm bảo nhạc bắt đầu phát khi trang tải
+      var audioElement = document.getElementById("background-music");
+
+      // Bỏ chế độ mute sau khi trang tải hoàn tất
+      window.onload = function () {
+        audioElement.muted = false;
+        audioElement.play();
+      };
+
+      // Thiết lập hộp quà và thiệp
+      const giftBox = document.createElement("div");
+      giftBox.classList.add("gift-box");
+      giftBox.innerHTML = "🎁"; // Icon hộp quà
+      giftBox.innerHTML += `<div class="bow"></div>`; // Nơ cho hộp quà
+
+      document.body.appendChild(giftBox);
+
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerHTML = `
+        <h2>Chúc Mừng Giáng Sinh! Đây là thông điệp dài hơn một chút để xem nó có hiển thị hết hay không. Hy vọng bạn sẽ thích!</h2>
+        <div></div>
+      `;
+      document.body.appendChild(card);
+
+      // Xử lý khi bấm vào hộp quà
+      giftBox.addEventListener("click", () => {
+        card.style.display = "block"; // Hiển thị thiệp chúc mừng
+        setTimeout(() => {
+          card.classList.add("show"); // Áp dụng hiệu ứng mở chậm
+        }, 10); // Thêm độ trễ nhỏ để hiệu ứng có thể áp dụng
+      });
+
+      // Đóng thiệp khi bấm vào nó
+      card.addEventListener("click", () => {
+        card.classList.remove("show"); // Loại bỏ hiệu ứng mở khi đóng thiệp
+        setTimeout(() => {
+          card.style.display = "none"; // Ẩn thiệp khi hiệu ứng đóng hoàn tất
+        }, 500); // Thời gian của hiệu ứng đóng (500ms)
+      });
+    </script>
+  </body>
+</html>

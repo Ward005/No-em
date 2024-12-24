@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hiệu Ứng Tuyết Rơi Giáng Sinh và Hộp Quà</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: url("./assets/image/background-giang-sinh-dep.jpg")
+          no-repeat center center fixed;
+        background-size: cover;
+        background-position: right;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Bông tuyết */
+      .snowflake {
+        position: absolute;
+        color: white;
+        user-select: none;
+        pointer-events: none;
+        font-family: Arial, sans-serif;
+        animation: snow 10s linear infinite;
+      }
+
+      @keyframes snow {
+        0% {
+          transform: translateY(-100px);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+
+      /* Hộp quà */
+      .gift-box {
+        position: fixed; /* Dùng fixed để đảm bảo nó luôn ở vị trí chính xác */
+        bottom: 10%; /* Đặt hộp quà cách đáy màn hình 20px */
+        left: 70%; /* Căn giữa theo chiều ngang */
+        transform: translateX(-50%); /* Căn chính xác */
+        width: 180px;
+        height: 180px;
+        background: #ffcc00; /* Màu vàng của hộp quà */
+        border: 5px solid #d89e00; /* Viền hộp quà */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 36px;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        z-index: 100; /* Đảm bảo hộp quà nằm trên các phần tử khác */
+      }
+
+      /* Nơ hộp quà */
+      .gift-box .bow {
+        position: absolute;
+        top: -40px; /* Nơ đặt phía trên hộp quà */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Các dây nơ chéo */
+      .gift-box .bow::before,
+      .gift-box .bow::after {
+        content: "";
+        position: absolute;
+        top: 50%; /* Đặt dây nơ ở giữa */
+        width: 190px; /* Chiều dài của các dây nơ */
+        height: 15px; /* Chiều rộng của các dây nơ */
+        background-color: #ff3366; /* Màu của dây nơ */
+        transform: translateY(-50%);
+      }
+
+      /* Dây nơ ngang */
+      .gift-box .bow::before {
+        top: 100px;
+        border-radius: 5px;
+      }
+
+      /* Dây nơ dọc */
+      .gift-box .bow::after {
+        top: 123px;
+        left: 35%;
+        border-radius: 5px;
+        transform: translateX(-65%) rotate(90deg); /* Quay dây nơ thành hình vuông góc */
+      }
+
+      /* Hiệu ứng lắc nhẹ khi hover */
+      .gift-box:hover {
+        transform: translateX(-50%) scale(1.1) rotate(-5deg);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Thiệp chúc mừng */
+      .card {
+        position: fixed;
+        top: 45%;
+        left: 55%;
+        transform: translate(-50%, -50%) scale(0.8); /* Bắt đầu từ trạng thái nhỏ hơn */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        text-align: center;
+        border-radius: 10px;
+        display: none;
+        width: 460px;
+        height: 200px;
+        z-index: 9999;
+        max-width: 400px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        opacity: 0; /* Bắt đầu với độ mờ */
+        transition: opacity 0.5s ease, transform 0.5s ease; /* Thêm hiệu ứng chuyển động */
+        overflow: hidden; /* Ẩn phần văn bản ngoài vùng hiển thị */
+      }
+
+      .card.show {
+        opacity: 1; /* Khi thiệp được hiển thị, độ mờ bằng 1 */
+        transform: translate(-50%, -50%) scale(1); /* Khi thiệp mở ra, trở lại kích thước bình thường */
+      }
+
+      .card h2 {
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      /* Responsive cho điện thoại xoay ngang */
+      @media (max-width: 890px) {
+        .gift-box {
+          width: 120px;
+          height: 120px;
+          font-size: 28px; /* Giảm kích thước icon khi ở trên thiết bị di động */
+        }
+
+        .gift-box .bow::before,
+        .gift-box .bow::after {
+          content: "";
+          position: absolute;
+          top: 50%; /* Đặt dây nơ ở giữa */
+          width: 130px; /* Chiều dài của các dây nơ */
+          height: 15px; /* Chiều rộng của các dây nơ */
+          background-color: #ff3366; /* Màu của dây nơ */
+          transform: translateY(-50%);
+        }
+        /* Dây nơ ngang */
+        .gift-box .bow::before {
+          top: 80px;
+          border-radius: 5px;
+        }
+
+        /* Dây nơ dọc */
+        .gift-box .bow::after {
+          top: 92px;
+          left: 35%;
+          border-radius: 5px;
+          transform: translateX(-65%) rotate(90deg); /* Quay dây nơ thành hình vuông góc */
+        }
+
+        .card {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Phát nhạc khi trang mở lên -->
+    <audio id="background-music" autoplay loop muted>
+      <source
+        src="./assets/image/Last_Christmas_[_YouConvert.net_].mp3"
+        type="audio/mp3"
+      />
+    </audio>
+
+    <script>
+      // Đảm bảo nhạc bắt đầu phát khi trang tải
+      var audioElement = document.getElementById("background-music");
+
+      // Bỏ chế độ mute sau khi trang tải hoàn tất
+      window.onload = function () {
+        audioElement.muted = false;
+        audioElement.play();
+      };
+
+      // Hàm tạo bông tuyết
+      function createSnowflake() {
+        const snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+
+        // Thêm ký tự tuyết ❄ vào bông tuyết
+        snowflake.textContent = "❄";
+
+        // Chọn kích thước ngẫu nhiên của bông tuyết
+        const size = Math.random() * 30 + 20; // Kích thước từ 20px đến 50px
+        snowflake.style.fontSize = `${size}px`;
+
+        // Chọn vị trí ngẫu nhiên cho bông tuyết
+        const startLeft = Math.random() * 100; // Vị trí bắt đầu từ 0 đến 100%
+        snowflake.style.left = `${startLeft}%`;
+
+        // Chọn thời gian rơi ngẫu nhiên (tốc độ khác nhau)
+        const animationDuration = Math.random() * 5 + 5; // Thời gian từ 5s đến 10s
+        snowflake.style.animationDuration = `${animationDuration}s`;
+
+        // Thêm bông tuyết vào body
+        document.body.appendChild(snowflake);
+
+        // Xóa bông tuyết khi nó đã rơi hết
+        snowflake.addEventListener("animationend", () => {
+          snowflake.remove();
+        });
+      }
+
+      // Tạo bông tuyết mỗi 300ms
+      setInterval(createSnowflake, 300);
+
+      // Thiết lập hộp quà và thiệp
+      const giftBox = document.createElement("div");
+      giftBox.classList.add("gift-box");
+      giftBox.innerHTML = "🎁"; // Icon hộp quà
+      giftBox.innerHTML += `<div class="bow"></div>`; // Nơ cho hộp quà
+
+      document.body.appendChild(giftBox);
+
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerHTML = `
+        <h2 class="text-effect">Chúc Mừng Giáng Sinh, Nhi! 🎄</h2>
+        <div class="text-effect">
+          Chúc bạn một mùa Giáng Sinh ấm áp, hạnh phúc và nhiều niềm vui bên gia đình và bạn bè. Mong rằng năm mới sẽ mang lại cho bạn nhiều may mắn và thành công! 🎁❤️
+        </div>
+      `;
+      document.body.appendChild(card);
+
+      // Xử lý khi bấm vào hộp quà
+      giftBox.addEventListener("click", () => {
+        card.style.display = "block"; // Hiển thị thiệp chúc mừng
+        setTimeout(() => {
+          card.classList.add("show"); // Áp dụng hiệu ứng mở chậm
+        }, 10); // Thêm độ trễ nhỏ để hiệu ứng có thể áp dụng
+      });
+
+      // Đóng thiệp khi bấm vào nó
+      card.addEventListener("click", () => {
+        card.classList.remove("show"); // Loại bỏ hiệu ứng mở khi đóng thiệp
+        setTimeout(() => {
+          card.style.display = "none"; // Ẩn thiệp khi hiệu ứng đóng hoàn tất
+        }, 500); // Thời gian của hiệu ứng đóng (500ms)
+      });
+    </script>
+  </body>
+</html>
+s
